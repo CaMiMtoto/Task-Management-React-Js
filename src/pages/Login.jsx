@@ -32,7 +32,7 @@ function Login() {
                     name: response.data.user.name,
                     email: response.data.user.username
                 }));
-                navigate('/home')
+                navigate('/')
             })
             .catch((error) => {
                 console.log(error);

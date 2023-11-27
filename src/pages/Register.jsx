@@ -5,7 +5,7 @@ import {Link, useNavigate} from "react-router-dom";
 
 function Register() {
     const [formData, setFormData] = useState({
-        name: '', email: '', phone: '', password: ''
+        name: '', email: '', password: '', password_confirmation: ''
     });
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -18,8 +18,13 @@ function Register() {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (formData.password !== formData.password_confirmation) {
+            setError('Password confirmation does not match');
+            return;
+        }
+
         http.post('/auth/register', {
-            phone: formData.phone,
             name: formData.name,
             email: formData.email,
             password: formData.password
@@ -51,7 +56,6 @@ function Register() {
         </div>
 
         {error && <div className="alert alert-danger rounded-1">{error}</div>
-
         }
 
         <form onSubmit={handleSubmit} autoComplete="off">
@@ -62,11 +66,7 @@ function Register() {
                        required={true}/>
             </div>
 
-            <div className="mb-4">
-                <label htmlFor="phone">Phone</label>
-                <input type="text" id="phone" className="form-control" name="phone" onChange={handleChange}
-                       required={true}/>
-            </div>
+
 
             <div className="mb-4">
                 <label htmlFor="email">Email</label>
@@ -78,6 +78,14 @@ function Register() {
                 <input type="password" id="password" className="form-control" name="password" required={true}
                        onChange={handleChange}/>
             </div>
+
+            <div className="mb-4">
+                <label htmlFor="password_confirmation">Password Confirmation</label>
+                <input type="password" id="password_confirmation" className="form-control" name="password_confirmation"
+                       required={true}
+                       onChange={handleChange}/>
+            </div>
+
             <button className="btn btn-primary d-inline-flex justify-content-center align-items-center gap-2 w-100"
                     disabled={loading}>
                 Register
