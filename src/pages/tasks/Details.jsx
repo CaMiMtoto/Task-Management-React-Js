@@ -2,7 +2,7 @@ import {useMatch} from "react-router-dom";
 import {useEffect, useState} from "react";
 import http from "../../configs/httpConfig.js";
 import {Spinner} from "react-bootstrap";
-import {formatDate} from "../../utils.js";
+import {formatDate, getTaskColor} from "../../utils.js";
 import {FaDownload} from "react-icons/fa6";
 
 export default function TaskDetails() {
@@ -84,17 +84,20 @@ export default function TaskDetails() {
                         Priority
                     </h6>
                     <p>
-                        {task?.priority}
+                         <span
+                             className={`badge rounded-pill bg-${getTaskColor(task?.priority)}-subtle text-${getTaskColor(task?.priority)}`}>
+                                {task?.priority}
+                            </span>
                     </p>
                 </div>
                 <div className="col-md-6">
                     <h6>
                         Attachment
                     </h6>
-                    <a href={import.meta.env.VITE_APP_API_URL + task?.attachment} target="_blank" rel="noreferrer"
-                       className="btn btn-success btn-sm">
-                        Download
-                        <FaDownload/>
+                    <a href={`${import.meta.env.VITE_APP_API_URL}tasks/download/${task?._id}`} target="_blank"
+                       rel="noreferrer"
+                       className="btn btn-success btn-sm px-3">
+                        <span className="">Download</span>
                     </a>
                 </div>
             </div>

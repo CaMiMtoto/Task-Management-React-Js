@@ -12,6 +12,20 @@ function formatDate(date) {
     return [year, month, day].join('-');
 }
 
+const getTaskColor = (priority) => {
+    switch (priority) {
+        case 'Low':
+            return 'success';
+        case 'Medium':
+            return 'warning';
+        case 'High':
+            return 'danger';
+        default:
+            return 'secondary';
+    }
+}
+
 export {
-    formatDate
+    formatDate,
+    getTaskColor
 }

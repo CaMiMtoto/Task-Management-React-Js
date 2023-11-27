@@ -1,10 +1,11 @@
-import {Button, Dropdown, Form, Modal, Spinner} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {FaEdit} from "react-icons/fa";
-import {FaEye, FaPlus, FaTrash, FaUser} from "react-icons/fa6";
+import {FaEye, FaPlus, FaTrash} from "react-icons/fa6";
 import http from "../configs/httpConfig.js";
 import AppPagination from "../components/Pagination.jsx";
 import {Link} from "react-router-dom";
+import {Spinner} from "react-bootstrap";
+import {getTaskColor} from "../utils.js";
 
 
 const Tasks = () => {
@@ -47,18 +48,6 @@ const Tasks = () => {
             });
     }
 
-    const getTaskColor = (priority) => {
-        switch (priority) {
-            case 'Low':
-                return 'success';
-            case 'Medium':
-                return 'warning';
-            case 'High':
-                return 'danger';
-            default:
-                return 'secondary';
-        }
-    }
 
     const exportUrl = import.meta.env.VITE_APP_API_URL + 'tasks/export';
     return (<div>
