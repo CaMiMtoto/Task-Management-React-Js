@@ -3,7 +3,6 @@ import {useEffect, useState} from "react";
 import http from "../../configs/httpConfig.js";
 import {Spinner} from "react-bootstrap";
 import {formatDate, getTaskColor} from "../../utils.js";
-import {FaDownload} from "react-icons/fa6";
 
 export default function TaskDetails() {
     let match = useMatch('/tasks/:id/details');

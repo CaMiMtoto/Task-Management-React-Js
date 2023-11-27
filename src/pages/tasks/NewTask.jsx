@@ -1,7 +1,7 @@
 import {Button, Form, Row} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import http from "../../configs/httpConfig.js";
-import {useMatch, useNavigate} from "react-router-dom";
+import {Link, useMatch, useNavigate} from "react-router-dom";
 import Select from 'react-select';
 import {formatDate} from "../../utils.js";
 
@@ -29,7 +29,6 @@ export default function NewTask() {
 
     // get id from the url params
     let match = useMatch('/tasks/:id/edit')
-
 
 
     const fetchTask = () => {
@@ -277,12 +276,17 @@ export default function NewTask() {
                 </div>
 
             </div>
-            <Button type="submit" variant="primary" disabled={loading}>
-                Submit
-                {loading && <div className="spinner-border spinner-border-sm ms-2" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </div>}
-            </Button>
+            <div className="d-flex justify-content-end align-items-center mt-4">
+                <Link to={'/tasks'} className="btn btn-secondary me-2">
+                    Cancel
+                </Link>
+                <Button type="submit" variant="primary" disabled={loading}>
+                    Submit
+                    {loading && <div className="spinner-border spinner-border-sm ms-2" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>}
+                </Button>
+            </div>
         </Form>
 
 
