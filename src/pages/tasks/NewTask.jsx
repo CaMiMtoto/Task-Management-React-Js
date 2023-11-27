@@ -2,8 +2,8 @@ import {Button, Form, Row} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import http from "../../configs/httpConfig.js";
 import {useMatch, useNavigate} from "react-router-dom";
-import {toast} from "react-toastify";
 import Select from 'react-select';
+import {formatDate} from "../../utils.js";
 
 const PRIORITIES = ["Low", "Medium", "High"];
 
@@ -30,23 +30,11 @@ export default function NewTask() {
     // get id from the url params
     let match = useMatch('/tasks/:id/edit')
 
-    function formatDate(date) {
-        let d = new Date(date),
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
 
-        if (month.length < 2)
-            month = '0' + month;
-        if (day.length < 2)
-            day = '0' + day;
-
-        return [year, month, day].join('-');
-    }
 
     const fetchTask = () => {
         setLoading(true);
-        http.get(`/tasks/${match.params.id}`)
+        http.get(`/tasks/${match.params.id}/details`)
             .then((response) => {
                 console.log(response);
                 setFormData({
@@ -58,9 +46,9 @@ export default function NewTask() {
                     projects: response.data.projects,
                     // format date to yyyy-MM-dd
                     start_date: formatDate(response.data.startDate),
-                    end_date: formatDate(response.data.endDate),
-                    attachment: response.data.attachment
+                    end_date: formatDate(response.data.endDate)
                 });
+                console.log(response.data.assignees.map((item) => ({value: item._id, label: item.name})));
             })
             .catch((error) => {
                 console.log(error);
@@ -94,11 +82,12 @@ export default function NewTask() {
     }
 
     useEffect(() => {
-        fetchAssignees();
-        fetchProjects();
-        if (match.params.id) {
+
+        if (match?.params.id) {
             fetchTask();
         }
+        fetchAssignees();
+        fetchProjects();
     }, []);
 
     const handleChange = (e) => {
@@ -269,7 +258,8 @@ export default function NewTask() {
                     {PRIORITIES.map((priority) => (
                         <div className="form-check form-check-inline" key={`priority-${priority}`}>
                             <input className="form-check-input" type="radio" name="priority" required={true}
-                                   value={formData.priority} onChange={handleChange}
+                                   defaultValue={formData.priority} onChange={handleChange}
+                                   checked={formData.priority === priority}
                                    id={`priority-id-${priority}`}/>
                             <label className="form-check-label" htmlFor={`priority-id-${priority}`}>
                                 {priority}

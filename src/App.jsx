@@ -11,11 +11,11 @@ import {ToastContainer} from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import NewTask from "./pages/tasks/NewTask.jsx";
+import TaskDetails from "./pages/tasks/Details.jsx";
 
 function App() {
 
-    return (
-        <>
+    return (<>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<AppLayout/>}>
@@ -23,6 +23,7 @@ function App() {
                         <Route path="tasks" element={<Tasks/>}/>
                         <Route path="tasks/create" element={<NewTask/>}/>
                         <Route path="tasks/:id/edit" element={<NewTask/>}/>
+                        <Route path="tasks/:id/details" element={<TaskDetails/>}/>
                     </Route>
                     <Route path="/auth" element={<AuthLayout/>}>
                         <Route path="login" element={<Login/>}/>
@@ -32,8 +33,7 @@ function App() {
                 </Routes>
             </BrowserRouter>
             <ToastContainer/>
-        </>
-    )
+        </>)
 }
 
 export default App

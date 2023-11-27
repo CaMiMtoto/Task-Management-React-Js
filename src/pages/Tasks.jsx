@@ -1,7 +1,7 @@
 import {Button, Dropdown, Form, Modal, Spinner} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {FaEdit} from "react-icons/fa";
-import {FaPlus, FaTrash, FaUser} from "react-icons/fa6";
+import {FaEye, FaPlus, FaTrash, FaUser} from "react-icons/fa6";
 import http from "../configs/httpConfig.js";
 import AppPagination from "../components/Pagination.jsx";
 import {Link} from "react-router-dom";
@@ -60,7 +60,7 @@ const Tasks = () => {
         }
     }
 
-
+    const exportUrl = import.meta.env.VITE_APP_API_URL + 'tasks/export';
     return (<div>
         <h1 className="mb-0">
             Tasks
@@ -69,10 +69,15 @@ const Tasks = () => {
             <div>
                 <input className="form-control" placeholder='Search ...'/>
             </div>
-            <Link to={'/tasks/create'} className="btn btn-primary">
-                Add Task
-                <FaPlus className="ms-2"/>
-            </Link>
+            <div className="btn-group">
+                <Link to={'/tasks/create'} className="btn btn-primary">
+                    Add Task
+                    <FaPlus className="ms-2"/>
+                </Link>
+                <a href={exportUrl} target={"_blank"} className="btn btn-success" rel="noreferrer">
+                    Export
+                </a>
+            </div>
         </div>
 
         {
@@ -83,7 +88,7 @@ const Tasks = () => {
         }
 
         {!loading && tasks.length > 0 && <div>
-            <table className="table table-striped table-hover border rounded">
+            <table className="table table-striped table-hover  rounded">
                 <thead>
                 <tr>
                     <th>Title</th>
@@ -107,10 +112,17 @@ const Tasks = () => {
                         </td>
                         <td>
                             <div>
-                                <Link to={`/tasks/${task._id}/edit`} className="btn btn-primary  bg-primary-subtle text-primary-emphasis border-0 rounded-1">
+                                <Link to={`/tasks/${task._id}/details`} title="Details"
+                                      className="btn btn-primary  bg-primary-subtle text-primary-emphasis border-0 rounded-1">
+                                    <FaEye/>
+                                </Link>
+                                <Link to={`/tasks/${task._id}/edit`} title="Edit"
+                                      className="btn btn-primary  bg-primary-subtle mx-2 text-primary-emphasis border-0 rounded-1">
                                     <FaEdit/>
                                 </Link>
-                                <button type="button"  className="btn btn-danger bg-danger-subtle text-danger-emphasis border-0 rounded-1 ms-2" onClick={() => handleDelete(task._id)}>
+                                <button type="button" title="Delete"
+                                        className="btn btn-danger bg-danger-subtle text-danger-emphasis border-0 rounded-1"
+                                        onClick={() => handleDelete(task._id)}>
                                     <FaTrash/>
                                 </button>
                             </div>

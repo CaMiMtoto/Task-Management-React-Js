@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const http = axios.create({
-    baseURL: "http://localhost:3000/api/",
+    baseURL: import.meta.env.VITE_APP_API_URL,
     headers: {
         "Content-Type": "application/json"
     },
@@ -19,5 +19,21 @@ http.interceptors.request.use(
         return Promise.reject(error);
     },
 );
+
+http.interceptors.response.use(
+    response => {
+        return response;
+    },
+    error => {
+        const {status} = error.response;
+        if (status === 401) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            window.location = "/auth/login";
+        }
+        return Promise.reject(error);
+    },
+);
+
 
 export default http;
