@@ -19,6 +19,7 @@ const validationSchema = Yup.object().shape({
 export default function NewTask() {
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
+    const [remaining, setRemaining] = useState(255);
     const [formData, setFormData] = useState({
         assignees: [],
         projects: [],
@@ -173,6 +174,7 @@ export default function NewTask() {
             ...formData, [e.target.name]: e.target.files[0]
         });
     }
+
 
     return (<div>
             <h4>
@@ -360,8 +362,14 @@ export default function NewTask() {
                                               required={true}
                                               value={formData.description} onChange={handleChange}/>*/}
                                         <Field as="textarea"
-                                               className={`form-control ${touched.description && errors.description ? 'border-danger' : ''}`}
+                                               onInput={(e) => {
+                                                   setRemaining(255 - e.target.value.length);
+                                               }}
+                                               className={`form-control ${touched.description && errors.description ? 'border-danger' : ''} ${touched.description && !errors.description ? 'border-success' : ''}`}
                                                name="description" id="description"/>
+                                        <p className="text-muted tw-text-xs mt-2">
+                                            Remaining {remaining >= 0 ? remaining : 0} characters.
+                                        </p>
                                         <ErrorMessage name="description" component="div"
                                                       className="text-danger tw-text-xs mt-1"/>
                                     </div>
