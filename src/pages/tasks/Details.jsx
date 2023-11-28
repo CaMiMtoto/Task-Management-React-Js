@@ -1,4 +1,4 @@
-import {useMatch} from "react-router-dom";
+import {Link, useMatch} from "react-router-dom";
 import {useEffect, useState} from "react";
 import http from "../../configs/httpConfig.js";
 import {Spinner} from "react-bootstrap";
@@ -29,6 +29,21 @@ export default function TaskDetails() {
     }, []);
     return (
         <div>
+
+            <nav aria-label="breadcrumb">
+                <ol className="breadcrumb">
+                    <li className="breadcrumb-item">
+                        <Link to={'/'}>Home</Link>
+                    </li>
+                    <li className="breadcrumb-item">
+                        <Link to={'/tasks'}>Tasks</Link>
+                    </li>
+                    <li className="breadcrumb-item active" aria-current="page">
+                        Details
+                    </li>
+                </ol>
+            </nav>
+
             <h4 className="mb-4">Task Details</h4>
             <div>
                 {

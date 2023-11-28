@@ -18,7 +18,7 @@ function Login() {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('login');
+        setLoading(true);
         http.post('/auth/login', {
             email: formData.email,
             password: formData.password
@@ -64,7 +64,7 @@ function Login() {
                 <input type="password" id="password" className="form-control" name="password" required={true}
                        onChange={handleChange}/>
             </div>
-            <button className="btn btn-primary d-inline-flex justify-content-center align-items-center gap-2 w-100"
+            <button className="btn btn-primary d-inline-flex justify-content-center align-items-center gap-2 w-100" type="submit"
                     disabled={loading}>
                 Login
                 {loading && <Spinner animation="border" size="sm"/>}

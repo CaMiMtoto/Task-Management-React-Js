@@ -183,33 +183,36 @@ const Tasks = () => {
                 </tbody>
             </table>
 
-            <div className="my-3 d-flex justify-content-between align-items-center flex-column flex-md-row">
-                <div>
-                    {/*<label htmlFor="filter" className="me-2">Filter</label>*/}
-                    <select name="filter" id="filter"
-                            onChange={(event) => {
-                                setSearch(event.target.value);
-                            }}
-                            className="form-select">
-                        <option value="">
-                            Filter by priority
-                        </option>
-                        {FILTERS.map((filter) => (
-                            <option key={filter.value} value={filter.value}>{filter.label}</option>
-                        ))}
-                    </select>
-                </div>
 
-                <div>
-                    <AppPagination currentPage={response.page} handlePageChange={fetchTasks}
-                                   prevPage={response.prevPage}
-                                   nextPage={response.nextPage}/>
-                </div>
-            </div>
         </div>}
+
         {tasks.length === 0 && <div className="alert alert-info">
             No tasks found , please add a task to get started
         </div>}
+
+        <div className="my-3 d-flex justify-content-between align-items-center flex-column flex-md-row">
+            <div>
+                {/*<label htmlFor="filter" className="me-2">Filter</label>*/}
+                <select name="filter" id="filter"
+                        onChange={(event) => {
+                            setSearch(event.target.value);
+                        }}
+                        className="form-select">
+                    <option value="">
+                        Filter by priority
+                    </option>
+                    {FILTERS.map((filter) => (
+                        <option key={filter.value} value={filter.value}>{filter.label}</option>
+                    ))}
+                </select>
+            </div>
+
+            <div>
+                <AppPagination currentPage={response.page} handlePageChange={fetchTasks}
+                               prevPage={response.prevPage}
+                               nextPage={response.nextPage}/>
+            </div>
+        </div>
 
 
     </div>);
