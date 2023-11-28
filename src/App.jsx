@@ -15,25 +15,25 @@ import TaskDetails from "./pages/tasks/Details.jsx";
 
 function App() {
 
-    return (<>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<AppLayout/>}>
-                        <Route index path="" element={<Home/>}/>
-                        <Route path="tasks" element={<Tasks/>}/>
-                        <Route path="tasks/create" element={<NewTask/>}/>
-                        <Route path="tasks/:id/edit" element={<NewTask/>}/>
-                        <Route path="tasks/:id/details" element={<TaskDetails/>}/>
-                    </Route>
-                    <Route path="/auth" element={<AuthLayout/>}>
-                        <Route path="login" element={<Login/>}/>
-                        <Route path="register" element={<Register/>}/>
-                    </Route>
-                    <Route path="*" element={<NotFound/>}/>
-                </Routes>
-            </BrowserRouter>
-            <ToastContainer/>
-        </>)
+    return (<div className="tw-antialiased">
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<AppLayout/>}>
+                    <Route index path="" element={<Home/>}/>
+                    <Route path="tasks" element={<Tasks/>}/>
+                    <Route path="tasks/create" element={<NewTask/>}/>
+                    <Route path="tasks/:id/edit" element={<NewTask/>}/>
+                    <Route path="tasks/:id/details" element={<TaskDetails/>}/>
+                </Route>
+                <Route path="/auth" element={<AuthLayout/>}>
+                    <Route path="login" element={<Login/>}/>
+                    <Route path="register" element={<Register/>}/>
+                </Route>
+                <Route path="*" element={<NotFound/>}/>
+            </Routes>
+        </BrowserRouter>
+        <ToastContainer/>
+    </div>)
 }
 
 export default App

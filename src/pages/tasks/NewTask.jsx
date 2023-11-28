@@ -4,6 +4,7 @@ import http from "../../configs/httpConfig.js";
 import {Link, useMatch, useNavigate} from "react-router-dom";
 import Select from 'react-select';
 import {formatDate} from "../../utils.js";
+import {toast} from "react-toastify";
 
 const PRIORITIES = ["Low", "Medium", "High"];
 
@@ -42,8 +43,7 @@ export default function NewTask() {
                     description: response.data.description,
                     priority: response.data.priority,
                     assignees: response.data.assignees,
-                    projects: response.data.projects,
-                    // format date to yyyy-MM-dd
+                    projects: response.data.projects, // format date to yyyy-MM-dd
                     start_date: formatDate(response.data.startDate),
                     end_date: formatDate(response.data.endDate)
                 });
@@ -129,25 +129,28 @@ export default function NewTask() {
             end_date: formData.end_date,
             attachment: formData.attachment
         };
-        let promise = http.post('/tasks', body, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        });
 
+        let promise = null;
         if (match.params.id) {
             promise = http.put(`/tasks/${match.params.id}`, body, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
+        } else {
+            promise = http.post('/tasks', body, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
         }
-
-        promise
-            .then(() => {
-                resetFormData();
-                navigate('/tasks');
-            })
+        promise.then(() => {
+            resetFormData();
+            toast('Task saved successfully', {
+                type: 'success'
+            });
+            navigate('/tasks');
+        })
             .catch(() => {
                 setLoading(false);
             })
@@ -164,9 +167,10 @@ export default function NewTask() {
 
     return (<div>
         <h4>
-            New Task
+            {match?.params.id ? 'Edit' : 'Create'}
+            Task
         </h4>
-        <p>
+        <p className="tw-tracking-wide tw-leading-loose">
             Please fill in the form below to create a new task
         </p>
         <Form onSubmit={handleSubmit}>
@@ -206,7 +210,7 @@ export default function NewTask() {
                         isMulti
                         name="assignes"
                         options={assignees.map((item) => ({value: item._id, label: item.name}))}
-                        defaultValue={formData.assignees?.map((item) => ({value: item._id, label: item.name}))}
+                        value={formData.assignees?.map((item) => ({value: item._id, label: item.name}))}
                         className="basic-multi-select"
                         classNamePrefix="select"
                         onChange={(newValue) => {
@@ -231,7 +235,7 @@ export default function NewTask() {
                     {/*projects*/}
 
                     <Select
-                        defaultValue={formData.projects?.map((item) => ({value: item._id, label: item.title}))}
+                        value={formData.projects?.map((item) => ({value: item._id, label: item.title}))}
                         isMulti
                         name="projects"
                         options={projects.map((item) => ({value: item._id, label: item.title}))}
@@ -252,18 +256,16 @@ export default function NewTask() {
                               value={formData.description} onChange={handleChange}/>
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="priority" className="form-label d-block fw-bold">Priority</label>
+                    <p className="form-label d-block fw-bold">Priority</p>
 
                     {PRIORITIES.map((priority) => (
-                        <div className="form-check form-check-inline" key={`priority-${priority}`}>
-                            <input className="form-check-input" type="radio" name="priority" required={true}
-                                   defaultValue={formData.priority} onChange={handleChange}
-                                   checked={formData.priority === priority}
-                                   id={`priority-id-${priority}`}/>
-                            <label className="form-check-label" htmlFor={`priority-id-${priority}`}>
-                                {priority}
-                            </label>
-                        </div>))}
+                        <div className="form-check form-check-inline" key={`priority_${priority}`}>
+                            <input className="form-check-input" type="radio" name="priority" id={`priority_${priority}`}
+                                   value={priority} checked={formData.priority === priority}
+                                   onChange={handleChange}/>
+                            <label className="form-check-label" htmlFor={`priority_${priority}`}>{priority}</label>
+                        </div>
+                    ))}
                 </div>
 
                 <div className="mb-3">
@@ -277,10 +279,10 @@ export default function NewTask() {
 
             </div>
             <div className="d-flex justify-content-end align-items-center mt-4">
-                <Link to={'/tasks'} className="btn btn-secondary me-2">
+                <Link to={'/tasks'} className="btn btn-secondary me-2 px-4 py-2">
                     Cancel
                 </Link>
-                <Button type="submit" variant="primary" disabled={loading}>
+                <Button type="submit" variant="primary" disabled={loading} className="px-4 py-2">
                     Submit
                     {loading && <div className="spinner-border spinner-border-sm ms-2" role="status">
                         <span className="visually-hidden">Loading...</span>

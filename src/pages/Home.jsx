@@ -104,8 +104,8 @@ function Home() {
                                                     {formatDate(task.endDate)}
                                                 </td>
                                                 <td>
-                                                    <Link className="btn btn-sm btn-primary" to={`/tasks/${task._id}/edit`}>
-                                                        Edit
+                                                    <Link className="btn btn-sm btn-primary" to={`/tasks/${task._id}/details`}>
+                                                        Details
                                                     </Link>
                                                 </td>
                                             </tr>
