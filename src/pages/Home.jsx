@@ -50,7 +50,7 @@ function Home() {
                 !loading && homeData && <div>
                     <Row>
                         <Col md={4}>
-                            <div className="card card-body bg-primary-subtle text-primary-emphasis">
+                            <div className="card  my-2 card-body bg-primary-subtle text-primary-emphasis">
                                 <FaTasks size={44}/>
                                 <h5 className="mt-3">
                                     Total Tasks
@@ -61,7 +61,7 @@ function Home() {
                             </div>
                         </Col>
                         <Col md={4}>
-                            <div className="card card-body bg-danger-subtle text-danger">
+                            <div className="card my-2 card-body bg-danger-subtle text-danger">
                                 <FaCalendarCheck size={44}/>
                                 <h5 className="mt-3">
                                     Due Tasks
@@ -72,7 +72,7 @@ function Home() {
                             </div>
                         </Col>
                         <Col md={4}>
-                            <div className="card card-body bg-success-subtle text-success">
+                            <div className="card my-2 card-body bg-success-subtle text-success">
                                 <FaClock size={44}/>
                                 <h5 className="mt-3">
                                     Upcoming Tasks
