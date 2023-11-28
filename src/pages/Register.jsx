@@ -35,7 +35,7 @@ function Register() {
                 localStorage.setItem('user', JSON.stringify({
                     id: response.data.user._id,
                     name: response.data.user.name,
-                    email: response.data.user.username
+                    email: response.data.user.email
                 }));
                 navigate('/')
             })
@@ -65,7 +65,6 @@ function Register() {
                 <input type="text" id="name" className="form-control" name="name" onChange={handleChange}
                        required={true}/>
             </div>
-
 
 
             <div className="mb-4">

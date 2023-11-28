@@ -12,6 +12,9 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NewTask from "./pages/tasks/NewTask.jsx";
 import TaskDetails from "./pages/tasks/Details.jsx";
+import Profile from "./pages/Profile.jsx";
+import EditProfile from "./pages/EditProfile.jsx";
+import ChangePassword from "./pages/ChangePassword.jsx";
 
 function App() {
 
@@ -24,6 +27,9 @@ function App() {
                     <Route path="tasks/create" element={<NewTask/>}/>
                     <Route path="tasks/:id/edit" element={<NewTask/>}/>
                     <Route path="tasks/:id/details" element={<TaskDetails/>}/>
+                    <Route path="my-profile" element={<Profile/>}/>
+                    <Route path="edit-profile" element={<EditProfile/>}/>
+                    <Route path="change-password" element={<ChangePassword/>}/>
                 </Route>
                 <Route path="/auth" element={<AuthLayout/>}>
                     <Route path="login" element={<Login/>}/>

@@ -37,7 +37,12 @@ function Home() {
 
             <div>
                 {
-                    loading && <Spinner/>
+                    loading && <div className="d-flex justify-content-center align-items-center my-5">
+                        <Spinner variant="primary"/>
+                        <span className="ms-2">
+                            Please wait ...
+                        </span>
+                    </div>
                 }
             </div>
 

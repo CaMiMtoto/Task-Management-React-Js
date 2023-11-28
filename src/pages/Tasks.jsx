@@ -89,6 +89,17 @@ const Tasks = () => {
 
 
     return (<div>
+        <nav aria-label="breadcrumb">
+            <ol className="breadcrumb">
+                <li className="breadcrumb-item">
+                    <Link to={'/'}>Home</Link>
+                </li>
+                <li className="breadcrumb-item active" aria-current="page">
+                    Tasks
+                </li>
+            </ol>
+        </nav>
+
         <h1 className="mb-0">
             Tasks
         </h1>

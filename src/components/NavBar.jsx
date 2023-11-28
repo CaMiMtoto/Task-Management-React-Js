@@ -1,14 +1,15 @@
 import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 function NavBar() {
+    let navigate = useNavigate();
     let user = JSON.parse(localStorage.getItem('user'));
     if (!user)
         return <></>;
     const handleLogout = () => {
         localStorage.removeItem('user');
         localStorage.removeItem('token');
-        window.location.href = '/auth/login';
+        navigate('/auth/login');
     }
 
     return (<Navbar expand="lg" className="bg-body-tertiary">
@@ -33,7 +34,19 @@ function NavBar() {
                     </Nav.Link>
                     <NavDropdown title={user.name} id="basic-nav-dropdown">
 
-                        <NavDropdown.Item as="div" onClick={handleLogout}>
+                        <NavDropdown.Item as="div" className="tw-cursor-pointer">
+                            <Link to={'/my-profile'} className="text-decoration-none text-dark">
+                                Profile
+                            </Link>
+                        </NavDropdown.Item>
+
+                        <NavDropdown.Item as="div" className="tw-cursor-pointer">
+                            <Link to={'/change-password'} className="text-decoration-none text-dark">
+                                Change Password
+                            </Link>
+                        </NavDropdown.Item>
+
+                        <NavDropdown.Item as="div" className="tw-cursor-pointer" onClick={handleLogout}>
                             Logout
                         </NavDropdown.Item>
                     </NavDropdown>
