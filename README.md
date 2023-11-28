@@ -13,7 +13,7 @@ A Task can be assigned to many users with many projects
 - Delete a task
 - Mark a task as complete
 - Mark a task as incomplete
-- Assign a task  to users
+- Assign a task to users
 - Assign a task to a project
 
 ## Installation
@@ -34,11 +34,17 @@ npm install
 
 ```javascript
 const http = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: import.meta.env.VITE_APP_API_URL,
     headers: {
         "Content-Type": "application/json"
     },
 });
+```
+
+using the `.env` file
+
+```bash
+VITE_APP_API_URL=your_api_url
 ```
 
 - Run the app
@@ -47,7 +53,7 @@ const http = axios.create({
 npm run dev
 ```
 
-Go to `http://localhost:3000` to view the app, or the port specified in the terminal.
+Go to `http://localhost:5173` or `http://localhost:your_port` to view the app, or the port specified in the terminal.
 
 Go find the API
 code [https://github.com/CaMiMtoto/Task-Management-API-Node-JS](https://github.com/CaMiMtoto/Task-Management-API-Node-JS)
