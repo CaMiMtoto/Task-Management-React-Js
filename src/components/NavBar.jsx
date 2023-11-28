@@ -15,7 +15,7 @@ function NavBar() {
     return (<Navbar expand="lg" className="bg-body-tertiary">
         <Container>
             <Navbar.Brand>
-                <Link to={'/home'} className="text-decoration-none text-dark-emphasis">
+                <Link to={'/'} className="text-decoration-none text-dark-emphasis">
                     Task Manager
                 </Link>
             </Navbar.Brand>
