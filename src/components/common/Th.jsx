@@ -5,8 +5,9 @@ export default function Th({sortColumn, sortOrder, onSort, currentSortColumn, te
     if (sortable) {
         return <th
             onClick={() => onSort(sortColumn)}
-            className="tw-px-6 tw-py-3 tw-text-left tw-text-xs tw-font-medium tw-text-gray-500 tw-uppercase tw-tracking-wider tw-cursor-pointer">
-            <div className="d-flex justify-content-between align-items-center">
+            className="w-tracking-normal text-uppercase text-primary fw-semibold tw-border-b-primary border-0 border-3 border-bottom tw-cursor-pointer">
+            <div
+                className="d-flex justify-content-between align-items-center tw-cursor-pointer tw-text-xs  border-3 border-end w-100">
                 <span>{text}</span>
                 {/*<FaSort/>*/}
                 {sortColumn === currentSortColumn && sortOrder === 'asc' && <FaSortUp/>}
@@ -16,8 +17,9 @@ export default function Th({sortColumn, sortOrder, onSort, currentSortColumn, te
         </th>;
     } else {
         return <th
-            className="tw-px-6 tw-py-3 tw-text-left tw-text-xs tw-font-medium tw-text-gray-500 tw-uppercase tw-tracking-wider ">
-            <div className="d-flex justify-content-between align-items-center">
+            className="w-tracking-normal text-uppercase text-primary fw-semibold tw-border-b-primary border-0 border-3 border-bottom">
+            <div
+                className="d-flex justify-content-between align-items-center tw-cursor-pointer tw-text-xs  border-3 border-end w-100">
                 <span>{text}</span>
             </div>
         </th>;

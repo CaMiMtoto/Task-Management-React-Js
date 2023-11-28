@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.btn, .form-control,.card {
+    @apply  tw-rounded-sm;
+}

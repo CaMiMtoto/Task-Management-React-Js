@@ -12,12 +12,9 @@ const PRIORITIES = ["Low", "Medium", "High"];
 const validationSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
     start_date: Yup.date().required('Start date is required'),
-    end_date: Yup.date().required('End date is required'),
-    // assignees: Yup.array().required('Assignees are required'),
-    // projects: Yup.array().required('Projects are required'),
+    end_date: Yup.date().required('End date is required').min(Yup.ref('start_date'), 'End date must be after start date'),
     description: Yup.string().required('Description is required').max(255, "Description must be at most 255 characters"),
     priority: Yup.string().required('Priority is required'),
-    // attachment: Yup.mixed().required('Attachment is required')
 });
 export default function NewTask() {
     const [loading, setLoading] = useState(true);
@@ -44,12 +41,13 @@ export default function NewTask() {
     // get id from the url params
     let match = useMatch('/tasks/:id/edit')
 
-
+    const [savedAssignees, setSavedAssignees] = useState([]);
+    const [savedProjects, setSavedProjects] = useState([]);
     const fetchTask = () => {
         setLoading(true);
         http.get(`/tasks/${match.params.id}/details`)
             .then((response) => {
-                console.log(response);
+
                 initialValues.title = response.data.title;
                 initialValues.description = response.data.description;
                 initialValues.priority = response.data.priority;
@@ -60,7 +58,8 @@ export default function NewTask() {
                     assignees: response.data.assignees,
                     projects: response.data.projects,
                 });
-                console.log(response.data.assignees.map((item) => ({value: item._id, label: item.name})));
+                setSavedAssignees(response.data.assignees);
+                setSavedProjects(response.data.projects);
             })
             .catch((error) => {
                 console.log(error);
@@ -71,7 +70,7 @@ export default function NewTask() {
     }
 
     const fetchAssignees = () => {
-
+        setLoading(true);
         http.get('/users')
             .then((response) => {
                 let results = response.data.results;
@@ -85,10 +84,14 @@ export default function NewTask() {
             })
             .catch((error) => {
                 console.log(error);
+            })
+            .finally(() => {
+                setLoading(false);
             });
     }
 
     const fetchProjects = () => {
+        setLoading(true);
         http.get('/projects')
             .then((response) => {
                 console.log(response);
@@ -96,6 +99,9 @@ export default function NewTask() {
             })
             .catch((error) => {
                 console.log(error);
+            })
+            .finally(() => {
+                setLoading(false);
             });
 
     }
@@ -242,11 +248,10 @@ export default function NewTask() {
                                                     value: item._id,
                                                     label: item.name
                                                 }))}
-
-                                             /*   value={formData.assignees.map((item) => ({
+                                                defaultValue={savedAssignees.map((item) => ({
                                                     value: item._id,
                                                     label: item.name
-                                                }))}*/
+                                                }))}
                                                 className="basic-multi-select"
                                                 classNamePrefix="select"
                                                 onChange={(newValue) => {
@@ -299,10 +304,10 @@ export default function NewTask() {
                                         {
                                             match?.params.id &&
                                             <Select
-                                      /*          value={formData.projects?.map((item) => ({
+                                                defaultValue={savedProjects?.map((item) => ({
                                                     value: item._id,
                                                     label: item.title
-                                                }))}*/
+                                                }))}
                                                 isMulti
                                                 name="projects"
                                                 options={projects.map((item) => ({
@@ -385,7 +390,10 @@ export default function NewTask() {
                                         </label>
                                         <input className="form-control"
                                                onChange={handleFileChange}
+                                               accept={".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg"}
                                                type="file" id="attachment" name="attachment"/>
+                                        <ErrorMessage name="attachment" component="div"
+                                                      className="text-danger tw-text-xs mt-1"/>
                                     </div>
 
                                 </div>

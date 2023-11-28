@@ -8,6 +8,7 @@ import {Spinner} from "react-bootstrap";
 import {getTaskColor} from "../utils.js";
 import Th from "../components/common/Th.jsx";
 import _ from "lodash";
+import Td from "../components/common/Td.jsx";
 
 const FILTERS = [
     {
@@ -136,20 +137,20 @@ const Tasks = () => {
                 <tbody>
                 {tasks.map((task) => (
                     <tr key={task._id}>
-                        <td className="tw-px-6 tw-text-sm tw-py-4 tw-whitespace-nowrap">{task.title}</td>
-                        <td className="tw-px-6 tw-text-sm tw-py-4 tw-whitespace-nowrap">
+                        <Td>{task.title}</Td>
+                        <Td>
                             <span
                                 className={`badge rounded-pill bg-${getTaskColor(task.priority)}-subtle text-${getTaskColor(task.priority)}`}>
                                 {task.priority}
                             </span>
-                        </td>
-                        <td className="tw-px-6 tw-text-sm tw-py-4 tw-whitespace-nowrap">
+                        </Td>
+                        <Td>
                             {new Date(task.startDate).toLocaleDateString()}
-                        </td>
-                        <td className="tw-px-6 tw-text-sm tw-py-4 tw-whitespace-nowrap">
+                        </Td>
+                        <Td>
                             {new Date(task.endDate).toLocaleDateString()}
-                        </td>
-                        <td className="tw-px-6 tw-text-sm tw-py-4 tw-whitespace-nowrap">
+                        </Td>
+                        <Td>
                             <div>
                                 <Link to={`/tasks/${task._id}/details`} title="Details"
                                       className="btn btn-primary  bg-primary-subtle text-primary-emphasis border-0 rounded-1">
@@ -165,7 +166,7 @@ const Tasks = () => {
                                     <FaTrash/>
                                 </button>
                             </div>
-                        </td>
+                        </Td>
                     </tr>
                 ))}
                 </tbody>

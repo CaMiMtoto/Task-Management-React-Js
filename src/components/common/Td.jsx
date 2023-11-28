@@ -1,7 +1,13 @@
-export default function Tx({children}) {
+import PropTypes from "prop-types";
+
+export default function Td({children, ...props}) {
     return (
-        <td className="px-6 py-4 whitespace-nowrap">
+        <td className="border-bottom border-4 border-0 tw-border-b-white tw-bg-primary/5  tw-text-sm tw-align-middle py-2" {...props}>
             {children}
         </td>
     );
+}
+
+Td.propTypes = {
+    children: PropTypes.node
 }
