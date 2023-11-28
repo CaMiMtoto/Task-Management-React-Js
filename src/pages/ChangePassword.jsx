@@ -86,7 +86,7 @@ export default function ChangePassword() {
                                 <Form.Label>
                                     New Password
                                 </Form.Label>
-                                <Form.Control type="password" required maxLength={4}
+                                <Form.Control type="password" required  minLength={4}
                                               value={formData.newPassword} name="newPassword" onChange={handleChange}/>
                             </Form.Group>
 
