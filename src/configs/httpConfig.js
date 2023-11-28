@@ -25,8 +25,7 @@ http.interceptors.response.use(
         return response;
     },
     error => {
-        const {status} = error.response;
-        if (status === 401) {
+        if (error.response?.status === 401) {
             localStorage.removeItem("token");
             localStorage.removeItem("user");
             window.location = "/auth/login";
